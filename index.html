@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para você ✨</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="scene">
+    <img src="hogwarts.jpg" alt="Hogwarts" class="bg" />
+
+    <div class="overlay"></div>
+    <div class="stars"></div>
+    <div class="sparkles" id="sparkles"></div>
+    <div class="moon"></div>
+
+    <div class="content">
+      <div id="harryWrapper" class="harry-wrapper" title="Clique no Harry">
+        <img
+          src="harry.png"
+          alt="Silhueta voando em uma vassoura"
+          id="harry"
+          class="harry"
+          draggable="false"
+        />
+        <div class="glow"></div>
+      </div>
+
+      <div id="messageBox" class="message-box">
+        <h1 class="message-title">Vou sentir sua falta, parceira &#128153;</h1>
+
+        <p class="message-subtitle">
+          Mesmo voando pra longe, algumas pessoas continuam perto no coração ✨
+          
+        </p>
+
+        <button id="restartBtn" class="restart-btn" type="button">
+          Ver de novo
+        </button>
+      </div>
+    </div>
+
+    <button id="musicBtn" class="music-btn" type="button">
+      🔊 Música
+    </button>
+
+    <audio id="bgMusic" loop preload="auto">
+      <source src="music.mp3" type="audio/mpeg" />
+      Seu navegador não suporta áudio.
+    </audio>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
