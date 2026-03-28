@@ -1,56 +1,47 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Para você ✨</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="scene">
-    <img src="hogwarts.jpg" alt="Hogwarts" class="bg" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Uma surpresa pra você</title>
 
-    <div class="overlay"></div>
-    <div class="stars"></div>
-    <div class="sparkles" id="sparkles"></div>
-    <div class="moon"></div>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-    <div class="content">
-      <div id="harryWrapper" class="harry-wrapper" title="Clique no Harry">
-        <img
-          src="harry.png"
-          alt="Silhueta voando em uma vassoura"
-          id="harry"
-          class="harry"
-          draggable="false"
-        />
-        <div class="glow"></div>
+  <body>
+    <!-- CORAÇÕES -->
+    <div class="hearts" id="hearts"></div>
+
+    <section class="hero">
+      <div class="container">
+        <div class="hero-box">
+          <div class="eyebrow">clique aqui e tenha uma surpresa</div>
+          <h1>Uma surpresa pra você, Amanda</h1>
+          <p>
+            Eu fiz isso de um jeito simples, mas com carinho. Depois que você clicar,
+            vão aparecendo aos poucos 10 coisas que eu gosto em você.
+          </p>
+          <button class="btn" id="openButton">
+            clique aqui e tenha uma surpresa ✨
+          </button>
+        </div>
       </div>
+    </section>
 
-      <div id="messageBox" class="message-box">
-        <h1 class="message-title">Vou sentir sua falta, parceira &#128153;</h1>
+    <section class="section hidden" id="contentSection">
+      <div class="container">
+        <div class="cards" id="cardsContainer"></div>
 
-        <p class="message-subtitle">
-          Mesmo voando pra longe, algumas pessoas continuam perto no coração ✨
-          
-        </p>
-
-        <button id="restartBtn" class="restart-btn" type="button">
-          Ver de novo
-        </button>
+        <div class="final-box" id="finalBox">
+          <div class="eyebrow">de verdade</div>
+          <h3>Essas foram só 10, mas eu poderia continuar.</h3>
+          <p>
+            Não sei quando você vai ver isso, mas espero que eu consiga tirar um sorriso de ti !!
+          </p>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <button id="musicBtn" class="music-btn" type="button">
-      🔊 Música
-    </button>
-
-    <audio id="bgMusic" loop preload="auto">
-      <source src="music.mp3" type="audio/mpeg" />
-      Seu navegador não suporta áudio.
-    </audio>
-  </div>
-
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
