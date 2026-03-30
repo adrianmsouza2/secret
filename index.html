@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Painel Hacker</title>
+  <title>Acesso Restrito</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -12,42 +12,96 @@
   <div class="flash" id="flash"></div>
 
   <main class="container" id="container">
-    <div class="tag">acesso restrito</div>
+    <section class="login-screen" id="loginScreen">
+      <div class="tag">ÁREA DE AUTENTICAÇÃO</div>
 
-    <h1 class="title glitch" data-text="SISTEMA BLOQUEADO">
-      <span id="typedText"></span>
-      <span class="cursor">|</span>
-    </h1>
+      <h1 class="login-title">IDENTIFICAÇÃO NECESSÁRIA</h1>
 
-    <p class="romantic">
-  clique em tentar o acesso para entrar em meu coração parceira!
-   </p>
+      <p class="login-subtitle">
+        informe seu nome e a senha para prosseguir
+      </p>
 
-    <p class="description">
-      terminal protegido. tentativa não autorizada detectada.
-    </p>
-
-    <button id="accessBtn" class="btn">tentar acesso</button>
-
-    <div class="panel hidden" id="panel">
-      <div class="status-line">iniciando protocolo...</div>
-
-      <div class="progress-box">
-        <div class="progress-label">
-          <span>verificação do sistema</span>
-          <span id="progressValue">0%</span>
+      <form class="login-form" id="loginForm">
+        <div class="input-group">
+          <label for="nameInput">nome</label>
+          <input
+            type="text"
+            id="nameInput"
+            placeholder="digite seu nome"
+            autocomplete="off"
+            required
+          />
         </div>
-        <div class="progress-bar">
-          <div class="progress-fill" id="progressFill"></div>
+
+        <div class="input-group">
+          <label for="passwordInput">senha</label>
+          <input
+            type="password"
+            id="passwordInput"
+            placeholder="digite a senha"
+            required
+          />
         </div>
+
+        <p class="hint">dica: a senha é parceira</p>
+
+        <button type="submit" class="btn">ENTRAR</button>
+
+        <p class="login-message" id="loginMessage"></p>
+      </form>
+    </section>
+
+    <section class="main-screen hidden" id="mainScreen">
+      <div id="topContent">
+        <div class="tag">ACESSO RESTRITO</div>
+
+        <h1 class="title glitch" data-text="SISTEMA BLOQUEADO">
+          <span id="typedText"></span><span class="cursor">|</span>
+        </h1>
+
+        <div class="terminal-text">
+          <p class="cmd-line">
+            <span class="cmd-prefix">[SYS]</span> sistema protegido...
+          </p>
+          <p class="cmd-line romantic-line">
+            <span class="cmd-prefix">[USR]</span> apenas alguém especial pode tentar o acesso
+          </p>
+          <p class="cmd-line">
+            <span class="cmd-prefix">[CMD]</span> terminal protegido. tentativa não autorizada detectada.
+          </p>
+        </div>
+
+        <button id="accessBtn" class="btn">TENTAR ACESSO</button>
       </div>
 
-      <ul class="logs" id="logs">
-        <li>[aguardando ação]</li>
-      </ul>
-    </div>
+      <div class="panel hidden" id="panel">
+        <div class="status-line">iniciando protocolo...</div>
 
-    <div class="popup" id="popup">⚠ tentativa registrada no sistema ⚠</div>
+        <div class="progress-box">
+          <div class="progress-label">
+            <span>verificação do sistema</span>
+            <span id="progressValue">0%</span>
+          </div>
+
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+
+        <ul class="logs" id="logs">
+          <li>[aguardando ação]</li>
+        </ul>
+      </div>
+
+      <div class="popup" id="popup">
+        ⚠ tentativa registrada no sistema ⚠
+      </div>
+
+      <div class="secret-message hidden" id="secretMessage">
+        <p>❤️ você encontrou a única brecha do sistema...</p>
+        <h2>acesso liberado ao meu coração ❤️</h2>
+      </div>
+    </section>
   </main>
 
   <script src="script.js"></script>

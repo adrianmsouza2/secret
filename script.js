@@ -1,6 +1,14 @@
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
+const loginScreen = document.getElementById("loginScreen");
+const mainScreen = document.getElementById("mainScreen");
+const loginForm = document.getElementById("loginForm");
+const nameInput = document.getElementById("nameInput");
+const passwordInput = document.getElementById("passwordInput");
+const loginMessage = document.getElementById("loginMessage");
+
+const topContent = document.getElementById("topContent");
 const typedText = document.getElementById("typedText");
 const accessBtn = document.getElementById("accessBtn");
 const popup = document.getElementById("popup");
@@ -10,9 +18,12 @@ const progressValue = document.getElementById("progressValue");
 const logs = document.getElementById("logs");
 const container = document.getElementById("container");
 const flash = document.getElementById("flash");
-const title = document.querySelector(".title");
+const secretMessage = document.getElementById("secretMessage");
+const glitch = document.querySelector(".glitch");
 
 const message = "SISTEMA BLOQUEADO";
+const correctPassword = "parceira";
+
 const logMessages = [
   "[ok] terminal conectado",
   "[ok] verificação inicial executada",
@@ -30,13 +41,10 @@ const chars = letters.split("");
 let fontSize = 16;
 let columns = 0;
 let drops = [];
+let typingStarted = false;
 let typingIndex = 0;
 let running = false;
 
-function runFakeSequence() {
-  title.classList.add("alert-mode");
-  // resto do código...
-}
 function setupCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -77,6 +85,18 @@ function typeWriter() {
     typedText.textContent += message.charAt(typingIndex);
     typingIndex++;
     setTimeout(typeWriter, 85);
+  }
+}
+
+function startMainScreen() {
+  loginScreen.classList.add("hidden");
+  mainScreen.classList.remove("hidden");
+
+  if (!typingStarted) {
+    typingStarted = true;
+    typedText.textContent = "";
+    typingIndex = 0;
+    typeWriter();
   }
 }
 
@@ -123,12 +143,45 @@ function beep(duration = 120, frequency = 740, volume = 0.03) {
   }
 }
 
+loginForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const nameValue = nameInput.value.trim();
+  const passwordValue = passwordInput.value.trim().toLowerCase();
+
+  if (!nameValue) {
+    loginMessage.textContent = "digite o nome para continuar.";
+    loginMessage.style.color = "#ff7a95";
+    return;
+  }
+
+  if (passwordValue !== correctPassword) {
+    loginMessage.textContent = "senha incorreta. tente novamente.";
+    loginMessage.style.color = "#ff7a95";
+    triggerShake();
+    beep(100, 320, 0.03);
+    return;
+  }
+
+  loginMessage.style.color = "#9cffb6";
+  loginMessage.textContent = `acesso autorizado, ${nameValue}...`;
+  triggerFlash();
+  beep(120, 640, 0.03);
+
+  setTimeout(() => {
+    startMainScreen();
+  }, 900);
+});
+
 function runFakeSequence() {
   if (running) return;
   running = true;
 
+  topContent.classList.add("hidden");
   popup.classList.add("show");
   panel.classList.remove("hidden");
+  secretMessage.classList.add("hidden");
+
   logs.innerHTML = "";
   progressFill.style.width = "0%";
   progressValue.textContent = "0%";
@@ -167,8 +220,14 @@ function runFakeSequence() {
       clearInterval(interval);
       addLog("[concluído] acesso negado");
       addLog("[concluído] retorne em outro momento");
-      beep(180, 440, 0.03);
-      running = false;
+
+      setTimeout(() => {
+        panel.classList.add("hidden");
+        secretMessage.classList.remove("hidden");
+        triggerFlash();
+        beep(180, 440, 0.03);
+        running = false;
+      }, 900);
     }
   }, 180);
 
@@ -180,6 +239,15 @@ function runFakeSequence() {
 accessBtn.addEventListener("click", runFakeSequence);
 window.addEventListener("resize", setupCanvas);
 
+setInterval(() => {
+  if (!mainScreen.classList.contains("hidden") && !topContent.classList.contains("hidden")) {
+    glitch.classList.add("active");
+
+    setTimeout(() => {
+      glitch.classList.remove("active");
+    }, 150);
+  }
+}, 2000);
+
 setupCanvas();
-typeWriter();
 setInterval(drawMatrix, 35);

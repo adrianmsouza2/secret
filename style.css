@@ -8,10 +8,13 @@
   --green: #00ff41;
   --green-soft: #9cffb6;
   --bg: #000000;
-  --panel: rgba(0, 0, 0, 0.8);
+  --panel: rgba(0, 0, 0, 0.9);
+  --red: #ff0033;
+  --red-soft: #ff7a95;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -65,17 +68,21 @@ body {
   position: relative;
   z-index: 3;
   width: min(92vw, 780px);
-  padding: 30px 22px;
-  border: 1px solid rgba(0, 255, 65, 0.55);
-  border-radius: 16px;
-  background: var(--panel);
+  max-height: 92vh;
+  overflow: auto;
+  padding: 34px 28px;
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.9);
   box-shadow:
-    0 0 16px rgba(0, 255, 65, 0.25),
-    0 0 40px rgba(0, 255, 65, 0.14),
-    inset 0 0 14px rgba(0, 255, 65, 0.08);
+    0 0 8px rgba(0, 255, 65, 0.1),
+    inset 0 0 8px rgba(0, 255, 65, 0.03);
   text-align: center;
-  backdrop-filter: blur(4px);
-  animation: pulse 2s infinite alternate;
+  backdrop-filter: blur(2px);
+}
+
+.hidden {
+  display: none !important;
 }
 
 .tag {
@@ -83,22 +90,94 @@ body {
   color: #79ff9e;
   text-transform: uppercase;
   letter-spacing: 0.3em;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
 }
 
-e {
+.login-screen,
+.main-screen {
+  width: 100%;
+}
+
+.login-title {
+  color: var(--green);
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  margin-bottom: 14px;
+  text-shadow:
+    0 0 6px rgba(0, 255, 65, 0.75),
+    0 0 16px rgba(0, 255, 65, 0.28);
+}
+
+.login-subtitle {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  margin-bottom: 24px;
+}
+
+.login-form {
+  width: min(100%, 420px);
+  margin: 0 auto;
+  display: grid;
+  gap: 16px;
+}
+
+.input-group {
+  display: grid;
+  gap: 8px;
+  text-align: left;
+}
+
+.input-group label {
+  color: #b8ffcd;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px 14px;
+  border: 1px solid rgba(0, 255, 65, 0.35);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #e7fff0;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.input-group input:focus {
+  border-color: rgba(0, 255, 65, 0.8);
+  box-shadow: 0 0 12px rgba(0, 255, 65, 0.12);
+}
+
+.input-group input::placeholder {
+  color: rgba(231, 255, 240, 0.35);
+}
+
+.hint {
+  color: rgba(255, 122, 149, 0.68);
+  font-size: 0.9rem;
+}
+
+.login-message {
+  min-height: 22px;
+  font-size: 0.95rem;
+  color: #ff7a95;
+}
+
+.title {
   position: relative;
   display: inline-block;
   font-size: clamp(1.8rem, 5vw, 4rem);
   line-height: 1.1;
-  margin-bottom: 14px;
+  margin-bottom: 18px;
   min-height: 1.3em;
   word-break: break-word;
-  color: #00ff41;
+  color: #ff0033;
   text-shadow:
-    0 0 8px #00ff41,
-    0 0 18px #00ff41,
-    0 0 30px rgba(0, 255, 65, 0.35);
+    0 0 10px #ff0033,
+    0 0 25px #ff0033,
+    0 0 50px rgba(255, 0, 51, 0.65);
 }
 
 .cursor {
@@ -106,62 +185,61 @@ e {
   animation: blink 0.8s steps(1) infinite;
 }
 
-.subtitle {
-  color: #d1ffe0;
-  font-size: clamp(1rem, 2.2vw, 1.35rem);
-  margin-bottom: 12px;
+.terminal-text {
+  width: min(100%, 620px);
+  margin: 0 auto 26px;
+  display: grid;
+  gap: 8px;
+  text-align: left;
 }
 
-.description {
-  color: var(--green-soft);
-  font-size: clamp(0.95rem, 2vw, 1.05rem);
-  margin-bottom: 24px;
-  opacity: 0.92;
+.cmd-line {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: clamp(0.95rem, 1.8vw, 1.02rem);
+  color: #9cffb6;
+  line-height: 1.5;
 }
-.title {
-  position: relative;
-  display: inline-block;
 
-  color: #ff0033;
+.cmd-prefix {
+  color: #00ff41;
+  margin-right: 8px;
+}
 
-  text-shadow:
-    0 0 10px #ff0033,
-    0 0 25px #ff0033,
-    0 0 50px #ff0033;
+.romantic-line {
+  color: rgba(255, 120, 140, 0.78);
+}
+
+.romantic-line .cmd-prefix {
+  color: #ff6b88;
 }
 
 .btn {
-  border: 1px solid var(--green);
+  border: 1px solid rgba(0, 255, 65, 0.6);
   background: transparent;
   color: var(--green);
-  padding: 14px 24px;
+  padding: 13px 24px;
   border-radius: 10px;
   cursor: pointer;
-  font-size: 0.98rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
   transition: 0.2s ease;
-  min-width: 190px;
+  box-shadow: none;
 }
 
 .btn:hover {
-  background: var(--green);
-  color: #000;
-  transform: scale(1.05);
-  box-shadow: 0 0 18px rgba(0, 255, 65, 0.45);
+  background: rgba(0, 255, 65, 0.08);
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
 }
 
 .panel {
-  margin-top: 24px;
+  margin-top: 0;
   text-align: left;
   border: 1px solid rgba(0, 255, 65, 0.28);
   border-radius: 12px;
-  padding: 16px;
+  padding: 18px;
   background: rgba(0, 20, 0, 0.45);
-}
-
-.hidden {
-  display: none;
+  min-height: 280px;
 }
 
 .status-line {
@@ -229,12 +307,38 @@ e {
   animation: glitchFlash 0.18s linear 6;
 }
 
-/* 🔥 GLITCH CORRIGIDO (BONITO E PROFISSIONAL) */
+.secret-message {
+  margin-top: 22px;
+  padding: 18px;
+  border: 1px solid rgba(255, 77, 109, 0.5);
+  border-radius: 14px;
+  background: rgba(255, 0, 80, 0.08);
+  color: #ff4d6d;
+  text-align: center;
+  box-shadow:
+    0 0 12px rgba(255, 77, 109, 0.18),
+    inset 0 0 12px rgba(255, 77, 109, 0.08);
+  animation: secretGlow 1.5s ease-in-out infinite alternate;
+}
+
+.secret-message p {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  color: #ff9ab0;
+}
+
+.secret-message h2 {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  color: #ff4d6d;
+  text-shadow:
+    0 0 8px rgba(255, 77, 109, 0.7),
+    0 0 18px rgba(255, 77, 109, 0.4);
+}
+
 .glitch {
   position: relative;
 }
 
-/* glitch só aparece às vezes */
 .glitch::before,
 .glitch::after {
   content: attr(data-text);
@@ -244,28 +348,46 @@ e {
   opacity: 0;
 }
 
-/* glitch vermelho */
 .glitch::before {
-  color: #ff2a4f;
+  color: #ff7a95;
   transform: translate(2px, 0);
   clip-path: inset(0 0 60% 0);
 }
 
-/* glitch inferior */
 .glitch::after {
-  color: #ff2a4f;
+  color: #ff7a95;
   transform: translate(-2px, 0);
   clip-path: inset(65% 0 0 0);
 }
 
-/* animação realista */
 .glitch.active::before,
 .glitch.active::after {
-  opacity: 0.25;
-  animation: glitchFlash 0.15s linear;
+  opacity: 0.1;
+  animation: glitchBurst 0.1s linear;
 }
 
-@keyframes glitchFlash {
+.shake {
+  animation: screenShake 0.45s linear;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes secretGlow {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.02);
+    opacity: 1;
+  }
+}
+
+@keyframes glitchBurst {
   0% { transform: translate(0, 0); }
   25% { transform: translate(2px, -1px); }
   50% { transform: translate(-2px, 1px); }
@@ -273,10 +395,39 @@ e {
   100% { transform: translate(0, 0); }
 }
 
-/* RESPONSIVO */
+@keyframes screenShake {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-3px, 2px); }
+  50% { transform: translate(3px, -2px); }
+  75% { transform: translate(-2px, 1px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes glitchFlash {
+  0% { transform: translate(0, 0); opacity: 1; }
+  50% { transform: translate(2px, -1px); }
+  100% { transform: translate(0, 0); opacity: 1; }
+}
+
+@keyframes flashScreen {
+  0% { opacity: 0; }
+  50% { opacity: 1; background: rgba(0, 255, 65, 0.12); }
+  100% { opacity: 0; }
+}
+
 @media (max-width: 768px) {
+  body {
+    padding: 16px;
+  }
+
   .container {
+    width: 95vw;
     padding: 24px 18px;
+  }
+
+  .tag {
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
   }
 
   .btn {
@@ -286,32 +437,13 @@ e {
 
 @media (max-width: 480px) {
   .container {
-    width: 95vw;
+    width: 96vw;
     padding: 20px 15px;
-  }
-}
-.romantic {
-  margin-top: 8px;
-  margin-bottom: 18px;
-  font-size: clamp(0.95rem, 2vw, 1.1rem);
-  color: #ff4d6d;
-
-  text-shadow:
-    0 0 6px rgba(255, 77, 109, 0.6),
-    0 0 12px rgba(255, 77, 109, 0.4);
-
-  animation: romanticGlow 1.8s ease-in-out infinite alternate;
-}
-
-/* efeito suave */
-@keyframes romanticGlow {
-  0% {
-    opacity: 0.7;
-    transform: scale(1);
+    border-radius: 14px;
   }
 
-  100% {
-    opacity: 1;
-    transform: scale(1.02);
+  .panel,
+  .secret-message {
+    padding: 14px;
   }
 }
