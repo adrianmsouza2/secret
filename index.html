@@ -1,47 +1,53 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Uma surpresa pra você</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Hacker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+  <div class="scanlines"></div>
+  <div class="flash" id="flash"></div>
 
-    <link rel="stylesheet" href="style.css" />
-  </head>
+  <main class="container" id="container">
+    <div class="tag">acesso restrito</div>
 
-  <body>
-    <!-- CORAÇÕES -->
-    <div class="hearts" id="hearts"></div>
+    <h1 class="title glitch" data-text="SISTEMA BLOQUEADO">
+      <span id="typedText"></span>
+      <span class="cursor">|</span>
+    </h1>
 
-    <section class="hero">
-      <div class="container">
-        <div class="hero-box">
-          <div class="eyebrow">clique aqui e tenha uma surpresa</div>
-          <h1>Uma surpresa pra você, Amanda</h1>
-          <p>
-            Eu fiz isso de um jeito simples, mas com carinho. Depois que você clicar,
-            vão aparecendo aos poucos 10 coisas que eu gosto em você.
-          </p>
-          <button class="btn" id="openButton">
-            clique aqui e tenha uma surpresa ✨
-          </button>
+    <p class="subtitle">entre aqui em outro momento</p>
+
+    <p class="description">
+      terminal protegido. tentativa não autorizada detectada.
+    </p>
+
+    <button id="accessBtn" class="btn">tentar acesso</button>
+
+    <div class="panel hidden" id="panel">
+      <div class="status-line">iniciando protocolo...</div>
+
+      <div class="progress-box">
+        <div class="progress-label">
+          <span>verificação do sistema</span>
+          <span id="progressValue">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
         </div>
       </div>
-    </section>
 
-    <section class="section hidden" id="contentSection">
-      <div class="container">
-        <div class="cards" id="cardsContainer"></div>
+      <ul class="logs" id="logs">
+        <li>[aguardando ação]</li>
+      </ul>
+    </div>
 
-        <div class="final-box" id="finalBox">
-          <div class="eyebrow">de verdade</div>
-          <h3>Essas foram só 10, mas eu poderia continuar.</h3>
-          <p>
-            Não sei quando você vai ver isso, mas espero que eu consiga tirar um sorriso de ti !!
-          </p>
-        </div>
-      </div>
-    </section>
+    <div class="popup" id="popup">⚠ tentativa registrada no sistema ⚠</div>
+  </main>
 
-    <script src="script.js"></script>
-  </body>
+  <script src="script.js"></script>
+</body>
 </html>

@@ -1,65 +1,180 @@
-const itens = [
-  { titulo: "Seu sorriso", texto: "Amanda, tem algo no seu sorriso que deixa tudo mais leve." },
-  { titulo: "Seu jeito", texto: "Eu gosto do seu jeito porque você consegue ser leve e marcante." },
-  { titulo: "Sua voz", texto: "Sua voz tem algo que passa uma calma boa." },
-  { titulo: "Sua energia", texto: "Você tem uma energia boa que aparece nos detalhes." },
-  { titulo: "Seu olhar", texto: "Seu olhar chama atenção sem esforço." },
-  { titulo: "Seu humor", texto: "Seu jeito de rir deixa tudo melhor." },
-  { titulo: "Jogar com você", texto: "Uma das coisas que eu mais gosto é jogar com você." },
-  { titulo: "Nossas partidas", texto: "Nem importa ganhar ou perder, só jogar com você já vale." },
-  { titulo: "Sua companhia", texto: "No fim, é a sua companhia que faz tudo ser diferente." },
-  { titulo: "Você", texto: "Amanda, você é especial de um jeito único." }
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+const typedText = document.getElementById("typedText");
+const accessBtn = document.getElementById("accessBtn");
+const popup = document.getElementById("popup");
+const panel = document.getElementById("panel");
+const progressFill = document.getElementById("progressFill");
+const progressValue = document.getElementById("progressValue");
+const logs = document.getElementById("logs");
+const container = document.getElementById("container");
+const flash = document.getElementById("flash");
+
+const message = "SISTEMA BLOQUEADO";
+const logMessages = [
+  "[ok] terminal conectado",
+  "[ok] verificação inicial executada",
+  "[scan] analisando protocolo",
+  "[scan] validando credenciais",
+  "[alerta] tentativa não autorizada detectada",
+  "[info] bloqueio de acesso mantido",
+  "[ok] sistema preservado"
 ];
 
-const openButton = document.getElementById("openButton");
-const contentSection = document.getElementById("contentSection");
-const cardsContainer = document.getElementById("cardsContainer");
-const finalBox = document.getElementById("finalBox");
-const hearts = document.getElementById("hearts");
+const letters =
+  "01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&@<>/\\{}[]アイウエオカキクケコサシスセソタチツテト";
+const chars = letters.split("");
 
-function criarCoracao() {
-  const heart = document.createElement("span");
-  heart.className = "heart-float";
-  heart.innerHTML = ["❤", "♡", "♥"][Math.floor(Math.random() * 3)];
+let fontSize = 16;
+let columns = 0;
+let drops = [];
+let typingIndex = 0;
+let running = false;
 
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = 14 + Math.random() * 20 + "px";
-  heart.style.animationDuration = 4 + Math.random() * 4 + "s";
+function setupCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 
-  hearts.appendChild(heart);
+  fontSize = window.innerWidth < 500 ? 14 : 16;
+  columns = Math.floor(canvas.width / fontSize);
+  drops = [];
 
-  setTimeout(() => heart.remove(), 8000);
+  for (let i = 0; i < columns; i++) {
+    drops[i] = Math.floor(Math.random() * (canvas.height / fontSize));
+  }
 }
 
-setInterval(criarCoracao, 600);
+function drawMatrix() {
+  ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-function criarCards() {
-  itens.forEach((item, index) => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <div class="card-top">
-        <span class="number">${String(index + 1).padStart(2, "0")}</span>
-        <span class="heart">♡</span>
-      </div>
-      <h2>${item.titulo}</h2>
-      <p>${item.texto}</p>
-    `;
-    cardsContainer.appendChild(card);
+  ctx.fillStyle = "#00ff41";
+  ctx.font = `${fontSize}px monospace`;
+
+  for (let i = 0; i < drops.length; i++) {
+    const text = chars[Math.floor(Math.random() * chars.length)];
+    const x = i * fontSize;
+    const y = drops[i] * fontSize;
+
+    ctx.fillText(text, x, y);
+
+    if (y > canvas.height && Math.random() > 0.975) {
+      drops[i] = 0;
+    }
+
+    drops[i]++;
+  }
+}
+
+function typeWriter() {
+  if (typingIndex < message.length) {
+    typedText.textContent += message.charAt(typingIndex);
+    typingIndex++;
+    setTimeout(typeWriter, 85);
+  }
+}
+
+function triggerShake() {
+  container.classList.remove("shake");
+  void container.offsetWidth;
+  container.classList.add("shake");
+}
+
+function triggerFlash() {
+  flash.classList.remove("active");
+  void flash.offsetWidth;
+  flash.classList.add("active");
+}
+
+function addLog(text) {
+  const li = document.createElement("li");
+  li.textContent = text;
+  logs.appendChild(li);
+  logs.scrollTop = logs.scrollHeight;
+}
+
+function beep(duration = 120, frequency = 740, volume = 0.03) {
+  try {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.type = "square";
+    oscillator.frequency.value = frequency;
+    gainNode.gain.value = volume;
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.start();
 
     setTimeout(() => {
-      card.classList.add("show");
-      card.scrollIntoView({ behavior: "smooth", block: "center" });
-    }, 1200 * index);
-  });
-
-  setTimeout(() => {
-    finalBox.classList.add("show");
-  }, 1200 * itens.length);
+      oscillator.stop();
+      audioContext.close();
+    }, duration);
+  } catch (error) {
+    console.log("Áudio não suportado.");
+  }
 }
 
-openButton.addEventListener("click", () => {
-  contentSection.classList.remove("hidden");
-  criarCards();
-  contentSection.scrollIntoView({ behavior: "smooth" });
-});
+function runFakeSequence() {
+  if (running) return;
+  running = true;
+
+  popup.classList.add("show");
+  panel.classList.remove("hidden");
+  logs.innerHTML = "";
+  progressFill.style.width = "0%";
+  progressValue.textContent = "0%";
+
+  triggerShake();
+  triggerFlash();
+  beep(140, 680);
+  beep(120, 520);
+
+  let progress = 0;
+  let logIndex = 0;
+
+  const interval = setInterval(() => {
+    progress += Math.floor(Math.random() * 8) + 3;
+
+    if (progress > 100) progress = 100;
+
+    progressFill.style.width = `${progress}%`;
+    progressValue.textContent = `${progress}%`;
+
+    if (logIndex < logMessages.length && Math.random() > 0.35) {
+      addLog(logMessages[logIndex]);
+      logIndex++;
+      beep(70, 880, 0.02);
+    }
+
+    if (Math.random() > 0.72) {
+      triggerShake();
+    }
+
+    if (Math.random() > 0.8) {
+      triggerFlash();
+    }
+
+    if (progress >= 100) {
+      clearInterval(interval);
+      addLog("[concluído] acesso negado");
+      addLog("[concluído] retorne em outro momento");
+      beep(180, 440, 0.03);
+      running = false;
+    }
+  }, 180);
+
+  setTimeout(() => {
+    popup.classList.remove("show");
+  }, 1600);
+}
+
+accessBtn.addEventListener("click", runFakeSequence);
+window.addEventListener("resize", setupCanvas);
+
+setupCanvas();
+typeWriter();
+setInterval(drawMatrix, 35);
