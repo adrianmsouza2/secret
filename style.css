@@ -86,15 +86,19 @@ body {
   font-size: 0.8rem;
 }
 
-.title {
+e {
+  position: relative;
+  display: inline-block;
   font-size: clamp(1.8rem, 5vw, 4rem);
   line-height: 1.1;
   margin-bottom: 14px;
   min-height: 1.3em;
-  text-shadow:
-    0 0 8px rgba(0, 255, 65, 0.95),
-    0 0 18px rgba(0, 255, 65, 0.5);
   word-break: break-word;
+  color: #00ff41;
+  text-shadow:
+    0 0 8px #00ff41,
+    0 0 18px #00ff41,
+    0 0 30px rgba(0, 255, 65, 0.35);
 }
 
 .cursor {
@@ -113,6 +117,17 @@ body {
   font-size: clamp(0.95rem, 2vw, 1.05rem);
   margin-bottom: 24px;
   opacity: 0.92;
+}
+.title {
+  position: relative;
+  display: inline-block;
+
+  color: #ff0033;
+
+  text-shadow:
+    0 0 10px #ff0033,
+    0 0 25px #ff0033,
+    0 0 50px #ff0033;
 }
 
 .btn {
@@ -214,104 +229,58 @@ body {
   animation: glitchFlash 0.18s linear 6;
 }
 
+/* 🔥 GLITCH CORRIGIDO (BONITO E PROFISSIONAL) */
 .glitch {
   position: relative;
 }
 
+/* glitch só aparece às vezes */
 .glitch::before,
 .glitch::after {
   content: attr(data-text);
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.6;
+  opacity: 0;
 }
 
+/* glitch vermelho */
 .glitch::before {
-  color: #ff0033;
-  transform: translate(-2px, 0);
-  clip-path: inset(0 0 45% 0);
-}
-
-.glitch::after {
-  color: #ff4d4d;
+  color: #ff2a4f;
   transform: translate(2px, 0);
-  clip-path: inset(55% 0 0 0);
-}
-.shake {
-  animation: screenShake 0.45s linear;
+  clip-path: inset(0 0 60% 0);
 }
 
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
+/* glitch inferior */
+.glitch::after {
+  color: #ff2a4f;
+  transform: translate(-2px, 0);
+  clip-path: inset(65% 0 0 0);
 }
 
-@keyframes pulse {
-  from {
-    box-shadow:
-      0 0 10px rgba(0, 255, 65, 0.2),
-      0 0 28px rgba(0, 255, 65, 0.12),
-      inset 0 0 10px rgba(0, 255, 65, 0.05);
-  }
-  to {
-    box-shadow:
-      0 0 22px rgba(0, 255, 65, 0.4),
-      0 0 50px rgba(0, 255, 65, 0.18),
-      inset 0 0 16px rgba(0, 255, 65, 0.08);
-  }
-}
-
-@keyframes screenShake {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  10% { transform: translate(-5px, 2px) rotate(-0.4deg); }
-  20% { transform: translate(5px, -2px) rotate(0.4deg); }
-  30% { transform: translate(-7px, 3px) rotate(-0.5deg); }
-  40% { transform: translate(7px, -3px) rotate(0.5deg); }
-  50% { transform: translate(-5px, 2px) rotate(-0.3deg); }
-  60% { transform: translate(5px, -2px) rotate(0.3deg); }
-  70% { transform: translate(-3px, 2px) rotate(-0.2deg); }
-  80% { transform: translate(3px, -2px) rotate(0.2deg); }
-  90% { transform: translate(-2px, 1px) rotate(-0.1deg); }
-  100% { transform: translate(0, 0) rotate(0deg); }
+/* animação realista */
+.glitch.active::before,
+.glitch.active::after {
+  opacity: 0.25;
+  animation: glitchFlash 0.15s linear;
 }
 
 @keyframes glitchFlash {
-  0% { transform: translate(0, 0); opacity: 1; }
-  25% { transform: translate(-2px, 1px); opacity: 0.75; }
-  50% { transform: translate(2px, -1px); opacity: 1; }
-  75% { transform: translate(-1px, 2px); opacity: 0.8; }
-  100% { transform: translate(0, 0); opacity: 1; }
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(2px, -1px); }
+  50% { transform: translate(-2px, 1px); }
+  75% { transform: translate(1px, -1px); }
+  100% { transform: translate(0, 0); }
 }
 
-@keyframes flashScreen {
-  0% { opacity: 0; background: rgba(0, 255, 65, 0); }
-  50% { opacity: 1; background: rgba(0, 255, 65, 0.12); }
-  100% { opacity: 0; background: rgba(0, 255, 65, 0); }
-}
-
+/* RESPONSIVO */
 @media (max-width: 768px) {
-  body {
-    padding: 16px;
-  }
-
   .container {
     padding: 24px 18px;
   }
 
-  .tag {
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
-  }
-
   .btn {
     width: 100%;
-    min-width: unset;
-  }
-
-  .logs {
-    max-height: 150px;
   }
 }
 
@@ -319,10 +288,30 @@ body {
   .container {
     width: 95vw;
     padding: 20px 15px;
-    border-radius: 14px;
+  }
+}
+.romantic {
+  margin-top: 8px;
+  margin-bottom: 18px;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: #ff4d6d;
+
+  text-shadow:
+    0 0 6px rgba(255, 77, 109, 0.6),
+    0 0 12px rgba(255, 77, 109, 0.4);
+
+  animation: romanticGlow 1.8s ease-in-out infinite alternate;
+}
+
+/* efeito suave */
+@keyframes romanticGlow {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
   }
 
-  .panel {
-    padding: 14px;
+  100% {
+    opacity: 1;
+    transform: scale(1.02);
   }
 }

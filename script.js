@@ -10,6 +10,7 @@ const progressValue = document.getElementById("progressValue");
 const logs = document.getElementById("logs");
 const container = document.getElementById("container");
 const flash = document.getElementById("flash");
+const title = document.querySelector(".title");
 
 const message = "SISTEMA BLOQUEADO";
 const logMessages = [
@@ -32,6 +33,10 @@ let drops = [];
 let typingIndex = 0;
 let running = false;
 
+function runFakeSequence() {
+  title.classList.add("alert-mode");
+  // resto do código...
+}
 function setupCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
